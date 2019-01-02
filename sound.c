@@ -30,8 +30,7 @@ int main()
             t1 = t2;
             decay = 3000;
         }
-        if (decay > 0)
-            decay--;
+        decay = decay > 0 ? decay-1 : 0;
     }
     return 0;
 }
