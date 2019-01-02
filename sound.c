@@ -1,9 +1,8 @@
 #include <stdio.h>
 
-static int _avg(int new, int old)
+static double _avg(double new, double rate, double old)
 {
-    double rate = .75;
-    return (int) (new*rate + old*(1-rate));
+    return new*rate + old*(1-rate);
 }
 
 static int rectify(int v)
@@ -13,20 +12,22 @@ static int rectify(int v)
 
 int main()
 {
-    int avgbpm = 0;
-    int bpm = 0;
+    double avgbpm1 = 0;
+    double avgbpm2 = 0;
+    double bpm = 0;
     int decay = 1000;
     int hz = 8000;
     int t1, t2, v;
     int threshold = 40;
 
-    for (t1 = 0, t2 = 0; feof(stdin) == 0; t2++) {
+    for (t1 = t2 = 0; feof(stdin) == 0; t2++) {
         v = rectify(fgetc(stdin));
         // if (t2 % 1000== 0) printf(": %d\n", (t2-t1)>>1);
         if (v > threshold && decay == 0) {
-            bpm = (int) (60 / (((double)(t2-t1)) / hz));
-            avgbpm = _avg(bpm, avgbpm);
-            printf("bpm: %d %d\n", bpm, avgbpm);
+            bpm = 60 / (((double)(t2-t1)) / hz);
+            avgbpm1 = _avg(bpm, .75, avgbpm1);
+            avgbpm2 = _avg(bpm, .5, avgbpm2);
+            printf("bpm: %f %f %f\n", bpm, avgbpm1, avgbpm2);
             t1 = t2;
             decay = 3000;
         }
