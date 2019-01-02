@@ -13,21 +13,20 @@ static int rectify(int v)
 
 int main()
 {
-    int threshold = 20;
-    int decay = 0;
-    int bpm, period, t1, t2, v;
-    int avgperiod = 0;
+    int avgbpm = 0;
+    int bpm = 0;
+    int decay = 1000;
     int hz = 8000;
+    int t1, t2, v;
+    int threshold = 40;
 
-    for (t1 = t2 = 0; feof(stdin) == 0; t2++) {
+    for (t1 = 0, t2 = 0; feof(stdin) == 0; t2++) {
         v = rectify(fgetc(stdin));
         // if (t2 % 1000== 0) printf(": %d\n", (t2-t1)>>1);
         if (v > threshold && decay == 0) {
-            period = t2-t1;
             bpm = (int) (60 / (((double)(t2-t1)) / hz));
-            avgperiod = _avg(period, avgperiod);
-            printf("period %d %d\n", period, avgperiod);
-            printf("bpm %d\n", bpm);
+            avgbpm = _avg(bpm, avgbpm);
+            printf("bpm: %d %d\n", bpm, avgbpm);
             t1 = t2;
             decay = 3000;
         }
