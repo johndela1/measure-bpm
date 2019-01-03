@@ -15,7 +15,7 @@ int main()
     double avgbpm1 = 0;
     double avgbpm2 = 0;
     double bpm = 0;
-    int decay = 1000;
+    int decay = 100;
     int hz = 8000;
     int t1, t2, v;
     int threshold = 40;
