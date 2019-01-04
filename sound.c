@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 static double _avg(double new, double rate, double old)
 {
@@ -10,7 +11,7 @@ static int rectify(int v)
     return v < 127 ? 127 - v : v - 127;
 }
 
-int main()
+int main(int argc, char *argv[])
 {
     double avgbpm1 = 0;
     double avgbpm2 = 0;
@@ -18,12 +19,15 @@ int main()
     int decay = 100;
     int hz = 8000;
     int t1, t2, v;
-    int threshold = 40;
+    int thresh = 100;
+
+    if (argc == 2)
+        thresh = atoi(argv[1]);
 
     for (t1 = t2 = 0; feof(stdin) == 0; t2++) {
         v = rectify(fgetc(stdin));
         // if (t2 % 1000== 0) printf(": %d\n", (t2-t1)>>1);
-        if (v > threshold && decay == 0) {
+        if (v > thresh && decay == 0) {
             bpm = 60 / (((double)(t2-t1)) / hz);
             avgbpm1 = _avg(bpm, .75, avgbpm1);
             avgbpm2 = _avg(bpm, .5, avgbpm2);
