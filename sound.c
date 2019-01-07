@@ -1,14 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define rectify(v) ((v) < 128 ? 128 - (v) : (v) - 128)
+
 static double _avg(double new, double rate, double old)
 {
     return new*rate + old*(1-rate);
-}
-
-static int rectify(int v)
-{
-    return v < 127 ? 127 - v : v - 127;
 }
 
 int main(int argc, char *argv[])
