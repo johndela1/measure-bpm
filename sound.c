@@ -2,7 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define rectify(v) ((v) < 128 ? 128 - (v) : (v) - 128)
+static int rectify(int v)
+{
+    return v < 128 ? 128 - v : v - 128;
+}
 
 static double _avg(double new, double rate, double old)
 {
@@ -23,8 +26,7 @@ int main(int argc, char *argv[])
 {
     test();
 
-    double avgbpm1 = 0;
-    double avgbpm2 = 0;
+    double avgbpm = 0;
     double bpm1= 0;
     double bpm2 = 0;
     int decay = 100;
@@ -40,10 +42,9 @@ int main(int argc, char *argv[])
         // if (t2 % 1000== 0) printf(": %d\n", (t2-t1)>>1);
         if (v > thresh && decay == 0) {
             bpm1 = bpm2;
-            bpm2 = 60 / (((double)(t2-t1)) / hz);
-            avgbpm1 = _avg(bpm2, .75, avgbpm1);
-            avgbpm2 = _avg(bpm2, .25, avgbpm2);
-            printf("dev %7.3f bpm %f %f %f\n", bpm2-bpm1, bpm2, avgbpm1, avgbpm2);
+            bpm2 = 60 / ((double)(t2-t1) / hz);
+            avgbpm = _avg(bpm2, .25, avgbpm);
+            printf("dev %7.3f bpm %f %f\n", bpm2-bpm1, bpm2, avgbpm);
             t1 = t2;
             decay = 3000;
         }
