@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
             bpm1 = bpm2;
             bpm2 = 60 / (((double)(t2-t1)) / hz);
             avgbpm1 = _avg(bpm2, .75, avgbpm1);
-            avgbpm2 = _avg(bpm2, .5, avgbpm2);
+            avgbpm2 = _avg(bpm2, .25, avgbpm2);
             printf("dev %7.3f bpm %f %f %f\n", bpm2-bpm1, bpm2, avgbpm1, avgbpm2);
             t1 = t2;
             decay = 3000;
