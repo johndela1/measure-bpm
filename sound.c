@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
             avgbpm = _avg(bpm2, .25, avgbpm);
             printf("dev %7.3f bpm %f %f\n", bpm2-bpm1, bpm2, avgbpm);
             t1 = t2;
-            decay = 3000;
+            decay = 2000;
         }
         decay = decay > 0 ? decay-1 : 0;
     }
