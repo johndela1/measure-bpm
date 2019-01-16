@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,8 +9,20 @@ static double _avg(double new, double rate, double old)
     return new*rate + old*(1-rate);
 }
 
+int test()
+{
+    int tests[][2] = {{127, 1}, {128, 0}, {129, 1}};
+
+    for (int i = 0; i < 3; i++) {
+        assert(rectify(tests[i][0]) == tests[i][1]);
+    }
+    return 1;
+}
+
 int main(int argc, char *argv[])
 {
+    test();
+
     double avgbpm1 = 0;
     double avgbpm2 = 0;
     double bpm1= 0;
